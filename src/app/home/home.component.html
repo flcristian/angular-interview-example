@@ -1,0 +1,10 @@
+<section class="grid-1-3">
+  <p-tree selectionMode="single" (onNodeSelect)="selectCafe($event)" [value]="nodes"></p-tree>
+  <section class="cafe-container">
+    <h1 *ngIf="!cafe; else cafeSelected">No cafe was selected!</h1>
+    <ng-template #cafeSelected>
+      <h1>{{this.cafe?.denumire}}</h1>
+      <app-coffee-list [cafeId]="cafe!.id"></app-coffee-list>
+    </ng-template>
+  </section>
+</section>

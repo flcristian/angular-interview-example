@@ -1,0 +1,25 @@
+<section style="gap: 20px">
+  <section class="container">
+    <label for="filter">Search:</label>
+    <input type="text" id="filter" [(ngModel)]="filterText" (ngModelChange)="filterProducts()">
+  </section>
+  <p-table [value]="filteredProducts">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID Cafea</th>
+        <th>Denumire</th>
+        <th>Descriere</th>
+        <th>Pret</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{product.id}}</td>
+        <td>{{product.denumire}}</td>
+        <td>{{product.descriere}}</td>
+        <td>{{product.pret}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</section>
+
