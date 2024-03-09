@@ -35,7 +35,7 @@ export class CoffeeListComponent implements OnInit {
 
     this.subscriptions.add(
       this.filterTextChanged.pipe(
-        debounceTime(250) // Debounce for 250ms
+        debounceTime(500) // Debounce for 250ms
       ).subscribe(() => {
         this.filterProducts();
       })
