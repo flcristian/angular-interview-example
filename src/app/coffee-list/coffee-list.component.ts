@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProdusDisponibil} from "../pseudo-api.service";
-import {Subscription, timeout} from "rxjs";
+import {debounceTime, Subject, Subscription, timeout} from "rxjs";
 import {ProductStateService} from "../service/product-state.service";
 
 @Component({
@@ -13,11 +13,16 @@ export class CoffeeListComponent implements OnInit {
   products: ProdusDisponibil[] = []
   filteredProducts: ProdusDisponibil[] = []
   filterText: string = ""
+  private filterTextChanged = new Subject<string>();
   timeout: any;
 
   constructor(
     private state: ProductStateService
   ) { }
+
+  onFilterTextChanged() {
+    this.filterTextChanged.next(this.filterText);
+  }
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -27,7 +32,16 @@ export class CoffeeListComponent implements OnInit {
         this.products = data
       })
     )
+
+    this.subscriptions.add(
+      this.filterTextChanged.pipe(
+        debounceTime(250) // Debounce for 250ms
+      ).subscribe(() => {
+        this.filterProducts();
+      })
+    )
   }
+
 
   filterProducts(){
     clearTimeout(this.timeout)
